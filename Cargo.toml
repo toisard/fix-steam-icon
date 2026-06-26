@@ -10,3 +10,17 @@ reqwest = { version = "0.12", features = ["blocking", "json"] }
 serde_json = "1.0"
 tokio = { version = "1.0", features = ["full"] }
 futures = "0.3"
+
+[profile.release]
+opt-level = "z"          # 优化体积
+lto = true               # 链接时优化
+codegen-units = 1        # 单代码生成单元，利于优化
+debug = false            # 不包含调试信息
+panic = "abort"          # 使用 abort 而非 unwind，减少体积
+strip = true             # 移除符号信息
+overflow-checks = false  # 移除溢出检查（生产环境慎用）
+incremental = false      # 禁用增量编译
+
+[profile.dev]
+opt-level = 0
+debug = false
